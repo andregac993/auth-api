@@ -1,0 +1,19 @@
+# .overcommit.yml
+PreCommit:
+  RuboCop:
+    enabled: true
+    command: ['bundle', 'exec', 'rubocop']
+    description: 'Analisando código com RuboCop'
+    on_warn: fail
+
+  RSpec:
+    enabled: false
+    command: ['bundle', 'exec', 'rspec']
+    description: 'Executando testes automatizados'
+
+CommitMsg:
+  CommitMessageFormat:
+    enabled: true
+    required_pattern: '^(feat|fix|chore|refactor|docs|test|style|perf|ci): .+'
+    error_message: 'Commit deve começar com feat:, fix:, chore:, etc.'
+
