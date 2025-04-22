@@ -1,0 +1,21 @@
+openapi: 3.0.1
+info:
+  title: Auth API
+  version: 'v1'
+paths:
+  /api/status:
+    get:
+      summary: API health check
+      tags:
+        - Status
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok

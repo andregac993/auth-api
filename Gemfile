@@ -8,6 +8,8 @@ gem "bootsnap", require: false
 
 group :development do
   gem "overcommit"
+  gem "rswag-ui"
+  gem "rswag-api"
 end
 
 group :development, :test do
