@@ -4,9 +4,9 @@ RSpec.describe 'POST /api/signup', type: :request do
   let(:valid_attributes) do
     {
       user: {
-        name:                  'João Silva',
-        email:                 'joao@example.com',
-        password:              'Password123',
+        name: 'João Silva',
+        email: 'andre@example.com',
+        password: 'Password123',
         password_confirmation: 'Password123'
       }
     }
@@ -20,14 +20,14 @@ RSpec.describe 'POST /api/signup', type: :request do
 
       expect(response).to have_http_status(:created)
       json = JSON.parse(response.body)
-      expect(json['user']['email']).to eq('joao@example.com')
-      expect(json['user']['name']).to  eq('João Silva')
+      expect(json['user']['email']).to eq('andre@example.com')
+      expect(json['user']['name']).to eq('João Silva')
       expect(json['message']).to eq(I18n.t('devise.registrations.signed_up'))
     end
   end
 
   context 'quando já existe um usuário com o mesmo e‑mail' do
-    before { User.create!(name: 'Fulano', email: 'joao@example.com', password: 'Password123', password_confirmation: 'Password123') }
+    before { User.create!(name: 'Fulano', email: 'andre@example.com', password: 'Password123', password_confirmation: 'Password123') }
 
     it 'retorna 422 e erro de email duplicado' do
       post '/api/signup', params: valid_attributes, as: :json

@@ -1,4 +1,3 @@
-# spec/requests/api/sessions_spec.rb
 require 'rails_helper'
 
 RSpec.describe 'POST /api/login', type: :request do
