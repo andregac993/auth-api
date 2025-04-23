@@ -6,7 +6,6 @@ gem "pg", "~> 1.1"
 gem "puma", ">= 5.0"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
-
 gem "devise"
 gem "devise-jwt"
 gem "dotenv-rails"
@@ -25,4 +24,6 @@ group :development, :test do
   gem "rubocop-performance"
   gem "rubocop-rails"
   gem "rubocop-rspec"
+  gem "shoulda-matchers", require: false
+  gem "factory_bot_rails"
 end
