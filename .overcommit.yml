@@ -1,15 +1,14 @@
-# .overcommit.yml
 PreCommit:
   RuboCop:
     enabled: true
     description: 'Auto-corrigindo código com RuboCop antes do commit'
-    flags: [ '--autocorrect', '--fail-level', 'E' ]
     require_executable: [ 'bundle', 'exec', 'rubocop' ]
+    flags: [ '--autocorrect', '--fail-level', 'E' ]
     on_warn: fail
 
   RSpec:
     enabled: true
-    description: 'Executando testes dentro do container Docker'
+    description: 'Rodar suíte de testes RSpec'
     require_executable: [ 'docker', 'compose' ]
     command:
       - docker
@@ -18,12 +17,12 @@ PreCommit:
       - web
       - bash
       - -lc
-      - "RAILS_ENV=test bundle exec rspec"
+      - 'RAILS_ENV=test bundle exec rspec'
     on_fail: fail
+
 
 CommitMsg:
   CommitMessageFormat:
     enabled: true
     required_pattern: '^(feat|fix|chore|refactor|docs|test|style|perf|ci): .+'
     error_message: 'Commit deve começar com feat:, fix:, chore:, etc.'
-
