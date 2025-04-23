@@ -6,18 +6,19 @@ gem "puma", ">= 5.0"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "bootsnap", require: false
 
+gem "devise"
+gem "devise-jwt"
+
 group :development do
   gem "overcommit"
-  gem "rswag-ui"
-  gem "rswag-api"
+
 end
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
-
   gem "rspec-rails", "~> 7.0.0"
-  gem "devise"
-  gem "devise-jwt"
+  gem "rswag-ui"
+  gem "rswag-api"
 end
