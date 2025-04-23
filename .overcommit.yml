@@ -2,13 +2,14 @@
 PreCommit:
   RuboCop:
     enabled: true
-    command: ['bundle', 'exec', 'rubocop']
-    description: 'Analisando código com RuboCop'
+    description: 'Auto-corrigindo código com RuboCop antes do commit'
+    flags: [ '--auto-correct', '--fail-level', 'E' ]
+    require_executable: [ 'bundle', 'exec', 'rubocop' ]
     on_warn: fail
 
   RSpec:
-    enabled: false
-    command: ['bundle', 'exec', 'rspec']
+    enabled: true
+    command: [ 'bundle', 'exec', 'rspec' ]
     description: 'Executando testes automatizados'
 
 CommitMsg:

@@ -2,6 +2,7 @@ openapi: 3.0.1
 info:
   title: Auth API
   version: 'v1'
+
 paths:
   /api/status:
     get:
@@ -37,7 +38,7 @@ paths:
                   properties:
                     name:
                       type: string
-                      example: João Silva
+                      example: João Silva
                     email:
                       type: string
                       format: email
@@ -71,7 +72,7 @@ paths:
                         example: 1
                       name:
                         type: string
-                        example: João Silva
+                        example: João Silva
                       email:
                         type: string
                         format: email
@@ -93,3 +94,64 @@ paths:
                     example:
                       - "Name can't be blank"
                       - "Email is invalid"
+
+  /api/login:
+    post:
+      summary: Faz login e retorna um token JWT
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                      example: joao@example.com
+                    password:
+                      type: string
+                      format: password
+                      example: Password123
+                  required:
+                    - email
+                    - password
+      responses:
+        '200':
+          description: Login bem-sucedido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: João Silva
+                      email:
+                        type: string
+                        format: email
+                        example: joao@example.com
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlhdCI6MTYwOT....
+        '401':
+          description: Credenciais inválidas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid email or password.
