@@ -56,6 +56,7 @@ en:
   errors:
     messages:
       already_confirmed: "was already confirmed, please try signing in"
+      taken: "has already been taken"
       confirmation_period_expired: "needs to be confirmed within %{period}, please request a new one"
       expired: "has expired, please request a new one"
       not_found: "not found"

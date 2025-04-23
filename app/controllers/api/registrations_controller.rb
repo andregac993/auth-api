@@ -6,8 +6,8 @@ module Api
       if user.save
         render json: {
           user: {
-            id:    user.id,
-            name:  user.name,
+            id: user.id,
+            name: user.name,
             email: user.email
           },
           message: I18n.t("devise.registrations.signed_up")
