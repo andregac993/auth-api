@@ -8,10 +8,10 @@ gem "bootsnap", require: false
 
 gem "devise"
 gem "devise-jwt"
+gem "dotenv-rails"
 
 group :development do
   gem "overcommit"
-
 end
 
 group :development, :test do
@@ -21,4 +21,7 @@ group :development, :test do
   gem "rspec-rails", "~> 7.0.0"
   gem "rswag-ui"
   gem "rswag-api"
+  gem "rubocop-performance"
+  gem "rubocop-rails"
+  gem "rubocop-rspec"
 end

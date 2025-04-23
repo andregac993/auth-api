@@ -3,14 +3,23 @@ PreCommit:
   RuboCop:
     enabled: true
     description: 'Auto-corrigindo código com RuboCop antes do commit'
-    flags: [ '--auto-correct', '--fail-level', 'E' ]
+    flags: [ '--autocorrect', '--fail-level', 'E' ]
     require_executable: [ 'bundle', 'exec', 'rubocop' ]
     on_warn: fail
 
   RSpec:
     enabled: true
-    command: [ 'bundle', 'exec', 'rspec' ]
-    description: 'Executando testes automatizados'
+    description: 'Executando testes dentro do container Docker'
+    require_executable: [ 'docker', 'compose' ]
+    command:
+      - docker
+      - compose
+      - exec
+      - web
+      - bash
+      - -lc
+      - "RAILS_ENV=test bundle exec rspec"
+    on_fail: fail
 
 CommitMsg:
   CommitMessageFormat:

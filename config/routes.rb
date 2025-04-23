@@ -5,9 +5,8 @@ Rails.application.routes.draw do
   namespace :api do
     get    "status", to: "status#index"
     post   "signup", to: "registrations#create"
-    post   'login',  to: 'sessions#create'
-
+    post   "login",  to: "sessions#create"
   end
 
-  root to: ->(_) { [200, {"Content-Type" => "text/plain"}, ["API is running 🚀"]] }
+  root to: ->(_) { [ 200, { "Content-Type" => "text/plain" }, [ "API is running 🚀" ] ] }
 end
