@@ -19,3 +19,77 @@ paths:
                   status:
                     type: string
                     example: ok
+
+  /api/signup:
+    post:
+      summary: Cria uma nova conta de usuário (sign up)
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: João Silva
+                    email:
+                      type: string
+                      format: email
+                      example: joao@example.com
+                    password:
+                      type: string
+                      format: password
+                      example: Password123
+                    password_confirmation:
+                      type: string
+                      format: password
+                      example: Password123
+                  required:
+                    - name
+                    - email
+                    - password
+                    - password_confirmation
+      responses:
+        '201':
+          description: Usuário criado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: João Silva
+                      email:
+                        type: string
+                        format: email
+                        example: joao@example.com
+                  message:
+                    type: string
+                    example: Welcome! You have signed up successfully.
+        '422':
+          description: Erros de validação
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "Name can't be blank"
+                      - "Email is invalid"
