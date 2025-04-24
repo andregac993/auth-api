@@ -3,19 +3,32 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   subject { build(:user) }
 
-  # validações do nome
   it "Verificando presença do nome de usuário" do
     should validate_presence_of(:name)
   end
 
-  # validações do Devise/email
   it { should validate_presence_of(:email) }
   it { should validate_uniqueness_of(:email).case_insensitive }
   it { should allow_value("foo@bar.com").for(:email) }
   it { should_not allow_value("invalid").for(:email) }
 
-  # validação de senha do Devise
   it { should validate_length_of(:password).is_at_least(6) }
+
+  it 'aceita atributos aninhados para address' do
+    expect {
+      User.create!(
+        name: 'Com Endereço',
+        email: 'with_address@example.com',
+        password: '123456',
+        password_confirmation: '123456',
+        address_attributes: {
+          zip_code: '12345-678',
+          city: 'São Paulo',
+          state: 'SP'
+        }
+      )
+    }.to change(Address, :count).by(1)
+  end
 
   context 'password confirmation' do
     it 'is invalid when password_confirmation does not match' do

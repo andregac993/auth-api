@@ -26,4 +26,5 @@ group :development, :test do
   gem "rubocop-rspec"
   gem "shoulda-matchers", require: false
   gem "factory_bot_rails"
+  gem "faker"
 end

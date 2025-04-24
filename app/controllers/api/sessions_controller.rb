@@ -6,11 +6,7 @@ module Api
       if user&.valid_password?(session_params[:password])
         token = Warden::JWTAuth::UserEncoder.new.call(user, :user, nil).first
         render json: {
-          user: {
-            id:    user.id,
-            name:  user.name,
-            email: user.email
-          },
+          user_id: user.id,
           token: token
         }, status: :ok
       else

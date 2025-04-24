@@ -1,5 +1,9 @@
 module Api
   class RegistrationsController < ApplicationController
+    rescue_from ActionController::ParameterMissing do |exception|
+      render json: { error: exception.message }, status: :bad_request
+    end
+
     def create
       user = User.new(registration_params)
 
@@ -7,7 +11,6 @@ module Api
         render json: {
           user: {
             id: user.id,
-            name: user.name,
             email: user.email
           },
           message: I18n.t("devise.registrations.signed_up")
@@ -20,7 +23,17 @@ module Api
     private
 
     def registration_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      params.require(:user).permit(
+        :name,
+        :email,
+        :password,
+        :password_confirmation,
+        address_attributes: [
+          :zip_code,
+          :city,
+          :state
+        ]
+      )
     end
   end
 end
