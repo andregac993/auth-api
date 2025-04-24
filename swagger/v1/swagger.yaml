@@ -2,20 +2,207 @@ openapi: 3.0.1
 info:
   title: Auth API
   version: 'v1'
+
 paths:
-  /api/status:
-    get:
-      summary: API health check
+  /api/signup:
+    post:
+      summary: Cria uma nova conta de usuário (sign up)
       tags:
-        - Status
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: João Silva
+                    email:
+                      type: string
+                      format: email
+                      example: joao@example.com
+                    password:
+                      type: string
+                      format: password
+                      example: Password123
+                    password_confirmation:
+                      type: string
+                      format: password
+                      example: Password123
+                    address_attributes:
+                      type: object
+                      properties:
+                        zip_code:
+                          type: string
+                          example: 12345-678
+                        city:
+                          type: string
+                          example: São Paulo
+                        state:
+                          type: string
+                          example: SP
+                  required:
+                    - name
+                    - email
+                    - password
+                    - password_confirmation
       responses:
-        '200':
-          description: OK
+        '201':
+          description: Usuário criado com sucesso
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  status:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      email:
+                        type: string
+                        format: email
+                        example: joao@example.com
+                  message:
                     type: string
-                    example: ok
+                    example: Welcome! You have signed up successfully.
+        '422':
+          description: Erros de validação (dados inválidos)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: string
+                    example:
+                      - "Name can't be blank"
+                      - "Email is invalid"
+                      - "Password confirmation doesn't match"
+        '400':
+          description:
+            Payload malformado (ex: falta da chave `user`)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example:
+                      param is missing or the value is empty: user
+
+  /api/login:
+    post:
+      summary: Faz login e retorna um token JWT
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    email:
+                      type: string
+                      format: email
+                      example: joao@example.com
+                    password:
+                      type: string
+                      format: password
+                      example: Password123
+                  required:
+                    - email
+                    - password
+      responses:
+        '200':
+          description: Login bem-sucedido
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: João Silva
+                      email:
+                        type: string
+                        format: email
+                        example: joao@example.com
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOjEsImlhdCI6MTYwOT...
+        '401':
+          description: Credenciais inválidas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Invalid email or password.
+
+  /api/me:
+    get:
+      summary: Retorna dados do usuário autenticado
+      tags:
+        - Auth
+      security:
+        - bearerAuth: [ ]
+      responses:
+        '200':
+          description: Dados do usuário autenticado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 1
+                      name:
+                        type: string
+                        example: João Silva
+                      email:
+                        type: string
+                        format: email
+                        example: joao@example.com
+        '401':
+          description: Não autorizado (token ausente ou inválido)
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Unauthorized
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
