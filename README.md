@@ -2,7 +2,7 @@
 
 ### API de autenticação com JWT e Devise, com testes automatizados, documentação Swagger e hooks de pré-commit para garantir qualidade de código.
 
-## Deploy feito na AWS ECR. Link Swagger: https://vz9m2whqdj.us-east-2.awsapprunner.com/
+### Deploy feito na AWS ECR. Link Swagger: https://vz9m2whqdj.us-east-2.awsapprunner.com/api-docs/index.html
 
 ---
 
